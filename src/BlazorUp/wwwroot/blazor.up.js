@@ -4,7 +4,7 @@
         return;
     }
 
-    scriptTags = [].slice.call(document.scripts);
+    var scriptTags = [].slice.call(document.scripts);
     var blazorWasmScriptTag = scriptTags.find(s => s.src && s.src.indexOf('_framework/blazor.webassembly.js') !== -1);
     if (!blazorWasmScriptTag) {
         console.warn('BlazorUP: no "blazor.webassembly.js" found!');
@@ -17,12 +17,8 @@
         return;
     }
 
-    var blazorUpScriptTag = scriptTags.find(s => s.src && s.src.indexOf('_content/BlazorUP/blazor.up.js') !== -1);
-    if (!blazorUpScriptTag) {
-        console.warn('BlazorUP: no "blazor.up.js" found!');
-        return Blazor.start();
-    }
-
+    var blazorUpScriptTag = document.currentScript;
+    
     var progressHandlerAttribute = blazorUpScriptTag.attributes['handler'];
     var progressHandlerName = 'blazorUp';
     if (progressHandlerAttribute && progressHandlerAttribute.value) {
